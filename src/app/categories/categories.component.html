@@ -1,0 +1,7 @@
+<ul class="categories">
+  <li class="category" *ngFor="let category of categories$ | async" [routerLink]="['/category', category.strCategory]">
+    <img [src]="category.strCategoryThumb" />
+    <h2>{{category.strCategory}}</h2>
+    <p>{{(category.strCategoryDescription | slice:0:20) + ' read more...'}}</p>
+  </li>
+</ul>

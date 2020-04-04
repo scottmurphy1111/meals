@@ -1,0 +1,4 @@
+<div *ngFor="let cat of category$ | async" [routerLink]="['/meal', cat.idMeal]">
+  <img [src]="cat.strMealThumb" />
+  <h2>{{cat.strMeal}}</h2>
+</div>
