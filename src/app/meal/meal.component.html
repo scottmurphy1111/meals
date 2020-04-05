@@ -1,7 +1,7 @@
 <div *ngFor="let meal of meal$ | async">
   <img [src]="meal.strMealThumb" />
   <h2>{{meal.strMeal}}</h2>
-  <p [innerHTML]="meal.strInstructions | instructions"></p>
+  <ul><li [innerHTML]="meal.strInstructions | instructions"></li></ul>
   <h3>Ingredients:</h3>
   <div class="ingredients">
     <ul class="list">
