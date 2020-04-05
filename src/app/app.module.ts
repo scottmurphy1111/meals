@@ -7,13 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoryComponent } from './category/category.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { MealComponent } from './meal/meal.component';
+import { InstructionsPipe } from './instructions.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoryComponent,
     CategoriesComponent,
-    MealComponent
+    MealComponent,
+    InstructionsPipe
   ],
   imports: [
     BrowserModule,

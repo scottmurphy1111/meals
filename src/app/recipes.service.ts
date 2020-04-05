@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class RecipesService {
   readonly ROOT_URL = 'https://www.themealdb.com/api/json/v1/1/';
-  ingredients$: Observable<string[]>;
+  ingredients$ = new BehaviorSubject<{}>({});
+  amounts$ = new BehaviorSubject<{}>({});
 
   constructor(
     private http: HttpClient
@@ -42,12 +43,12 @@ export class RecipesService {
   getMeal(id: string) {
     return this.http.get<any>(`${this.ROOT_URL}lookup.php?i=${id}`).pipe(
       map(val => {
-        console.log('vale', val);
         return this.constructMeal(val);
       }),
-      // tap(val => {
-      //   this.ingredients$ = this.getIngredients(val);
-      // })
+      tap((val) => {
+        this.ingredients$.next(this.getList(val, 'strIngredient'));
+        this.amounts$.next(this.getList(val, 'strMeasure'));
+      })
     );
   }
 
@@ -55,10 +56,17 @@ export class RecipesService {
     return val.meals;
   }
 
-  getIngredients(meal) {
-    console.log('meallll', meal);
-    return Object.keys(meal[0]).filter(item => {
-      item.includes('strIngredient');
-    });
+  getList(fullMeal: {}, stringName = ''): {} {
+    const mealItem = fullMeal[0];
+    return Object.values(Object.keys(mealItem)
+      .filter(val => {
+        if (mealItem[val]) {
+          const value = val.startsWith(stringName);
+          return value;
+        }
+      })
+      .reduce((acc, key) => {
+        return (acc[key] = mealItem[key], acc);
+      }, {} ));
   }
 }

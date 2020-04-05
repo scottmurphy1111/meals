@@ -1,10 +1,18 @@
 <div *ngFor="let meal of meal$ | async">
   <img [src]="meal.strMealThumb" />
   <h2>{{meal.strMeal}}</h2>
-  <p>{{meal.strInstructions}}</p>
-  <!-- <ul>
-    <li *ngFor="let item of meal.strIngredient | keyvalue">
-      item {{item}}
-    </li>
-  </ul> -->
+  <p [innerHTML]="meal.strInstructions | instructions"></p>
+  <h3>Ingredients:</h3>
+  <div class="ingredients">
+    <ul class="list">
+      <li *ngFor="let item of ingredients$ | async">
+       {{item}}
+      </li>
+    </ul>
+    <ul class="list">
+      <li *ngFor="let item of amounts$ | async">
+        {{item}}
+      </li>
+    </ul>
+  </div>
 </div>

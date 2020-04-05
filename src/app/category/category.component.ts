@@ -22,11 +22,6 @@ export class CategoryComponent implements OnInit {
     this.category$ = this.filterByCategory(this.id);
   }
 
-  // onCategoryClick(val) {
-  //   console.log('val', val);
-  //   this.filterByCategory(val);
-  // }
-
   filterByCategory(cat) {
     return this.recipesService.getSingleCategory(cat);
   }

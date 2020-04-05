@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipesService } from '../recipes.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-meal',
@@ -11,6 +12,7 @@ import { Observable } from 'rxjs';
 export class MealComponent implements OnInit {
   meal$: Observable<any>;
   ingredients$: Observable<any>;
+  amounts$: Observable<any>;
   id: string;
 
   constructor(
@@ -21,8 +23,8 @@ export class MealComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedroute.snapshot.paramMap.get('id');
     this.meal$ = this.filterMeal(this.id);
-    // this.ingredients$ = this.recipesService.ingredients.subscribe();
-    console.log('ingredients', this.ingredients$);
+    this.ingredients$ = this.recipesService.ingredients$;
+    this.amounts$ = this.recipesService.amounts$;
   }
 
   filterMeal(cat) {
